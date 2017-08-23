@@ -1,0 +1,45 @@
+format output:
+
+docker ps
+yuck
+docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}"
+lovely!
+go templates
+don't want to do this every time, so:
+vim ~/.docker/config.json
+add psFormat
+also works for imageFormat and docker images --format
+
+filter images:
+docker images "docker2017*"
+
+do healthchecks:
+docker ps
+notice the healthy status
+vim nginx/Dockerfile
+change to 8080
+docker-compose up -d --build
+unhealthy!
+used by ECS/Swarm/Kube etc
+
+cleanup after itself:
+
+docker system df
+docker system prune
+docker image prune
+docker volume prune
+
+build from heredoc:
+
+docker build -t python - << EOF
+FROM alpine
+RUN apk update && apk add python
+CMD ["python"]
+EOF
+
+docker run --rm -it python
+
+build from github:
+
+docker build -t nyancat github.com/anapsix/docker-nyancat
+docker run --rm -it nyancat

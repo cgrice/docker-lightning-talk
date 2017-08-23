@@ -1,0 +1,19 @@
+version: "2.1"
+
+services:
+    web:
+        image: "nginx:alpine" 
+        depends_on:
+            mysql:
+                condition: service_healthy
+    mysql:
+        image: mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 2s
+            retries: 10
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: symfony
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: symfony
